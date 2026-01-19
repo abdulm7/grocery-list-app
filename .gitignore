@@ -1,0 +1,96 @@
+# =========================
+# Monorepo: Django + React
+# =========================
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Secrets / Env ----
+.env
+.env.*
+!.env.example
+
+# ---- Python / Django ----
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+nosetests.xml
+.pyre/
+.dmypy.json
+dmypy.json
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Django runtime artifacts
+*.log
+local_settings.py
+
+# Local databases
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+*.sqlite3-journal
+
+# Django media/static outputs (scope to common backend dirs)
+backend/media/
+backend/staticfiles/
+backend/static/
+
+# If your Django project folder differs, add equivalents:
+# server/media/
+# server/staticfiles/
+# server/static/
+
+# ---- Python packaging / builds ----
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.wheels/
+
+# ---- Node / React ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend build outputs (Vite / CRA / Next)
+dist/
+build/
+.vite/
+.next/
+out/
+
+# ---- TypeScript / tooling ----
+*.tsbuildinfo
+
+# ---- Optional: Docker local volumes (only if you create these) ----
+docker-data/
