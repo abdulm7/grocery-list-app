@@ -10,22 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+import environ
+import psycopg
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize django-environ
+env = environ.Env(
+    # Set default values and casting
+    DEBUG=(bool, True),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
+)
+
+# Read .env file if it exists
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-34g+4mbn948^uk6a(k@xz*(aa=hd_ns54v-ib-xjw*p1+(%$6f'
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-34g+4mbn948^uk6a(k@xz*(aa=hd_ns54v-ib-xjw*p1+(%$6f')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -74,13 +88,37 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Uses DATABASE_URL env var for PostgreSQL, falls back to SQLite if not set or connection fails.
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+SQLITE_FALLBACK = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+
+DATABASE_URL = env('DATABASE_URL', default='')
+
+if DATABASE_URL:
+    # Test PostgreSQL connection and fall back to SQLite if it fails
+    try:
+        db_config = env.db_url_config(DATABASE_URL)
+        conn = psycopg.connect(
+            host=db_config.get('HOST', 'localhost'),
+            port=db_config.get('PORT', 5432),
+            user=db_config.get('USER', ''),
+            password=db_config.get('PASSWORD', ''),
+            dbname=db_config.get('NAME', ''),
+            connect_timeout=5,
+        )
+        conn.close()
+        DATABASES = {
+            'default': env.db_url_config(DATABASE_URL) | {
+                'CONN_MAX_AGE': 600,
+                'CONN_HEALTH_CHECKS': True,
+            }
+        }
+    except Exception as e:
+        import warnings
+        warnings.warn(f"PostgreSQL connection failed ({e}), falling back to SQLite.")
+        DATABASES = {'default': env.db_url_config(SQLITE_FALLBACK)}
+else:
+    DATABASES = {'default': env.db_url_config(SQLITE_FALLBACK)}
 
 
 # Password validation
