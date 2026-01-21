@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Toaster } from "sonner";
 import { Header } from "@/components/layout/Header";
 import { AddItemForm } from "@/components/grocery/AddItemForm";
 import { GroceryListContainer } from "@/components/grocery/GroceryListContainer";
@@ -7,6 +8,7 @@ import { ErrorAlert } from "@/components/shared/ErrorAlert";
 import { useGroceryItems, getErrorMessage } from "@/hooks/useGroceryQueries";
 import type { GroceryItem, GroceryCategory } from "@/api/types";
 import "@/styles/App.css";
+import { ActionBar } from "./components/grocery/ActionBar";
 
 const CATEGORIES: GroceryCategory[] = [
   "Produce",
@@ -68,6 +70,7 @@ const App = () => {
           <ErrorAlert error={getErrorMessage(error)} />
         )}
         <AddItemForm />
+        <ActionBar />
         <GroceryListContainer items={filteredItems} onEdit={handleEdit} />
 
         <EditItemModal
@@ -77,6 +80,8 @@ const App = () => {
           categories={CATEGORIES}
         />
       </main>
+
+      <Toaster position="bottom-right" />
     </div>
   );
 };

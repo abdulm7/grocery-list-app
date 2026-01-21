@@ -24,7 +24,7 @@ def grocery_item_list(request):
     
     elif request.method == 'DELETE':
         count = GroceryItem.objects.all().delete()
-        return Response({'deleted': count[0]}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'deleted': count[0]}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'PATCH', 'DELETE'])
