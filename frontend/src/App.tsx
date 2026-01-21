@@ -6,23 +6,15 @@ import { GroceryListContainer } from "@/components/grocery/GroceryListContainer"
 import { EditItemModal } from "@/components/grocery/EditItemModal";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
 import { useGroceryItems, getErrorMessage } from "@/hooks/useGroceryQueries";
-import type { GroceryItem, GroceryCategory } from "@/api/types";
+import type { GroceryItem } from "@/api/types";
 import "@/styles/App.css";
-import { ActionBar } from "./components/grocery/ActionBar";
-
-const CATEGORIES: GroceryCategory[] = [
-  "Produce",
-  "Dairy",
-  "Meat",
-  "Pantry",
-  "Bakery",
-  "Other",
-];
+import { ActionBar } from "@/components/grocery/ActionBar";
+import { FormCategories } from "@/constants/constants";
 
 const App = () => {
-  const { data: items = [], isLoading, error, isError } = useGroceryItems();
+  const { data: items = [], isLoading, error } = useGroceryItems();
   // TO DO: implement category dropdwn filter
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  // const [selectedCategory, setSelectedCategory] = useState("All");
   const [editingItem, setEditingItem] = useState<GroceryItem | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [errorDismissed, setErrorDismissed] = useState(false);
@@ -43,10 +35,11 @@ const App = () => {
     }
   };
 
-  const filteredItems =
-    selectedCategory === "All"
-      ? items
-      : items.filter((item) => item.category === selectedCategory);
+  const filteredItems = items;
+    // TO DO: implement category filter
+    // selectedCategory === "All"
+    //   ? items
+    //   : items.filter((item) => item.category === selectedCategory);
 
   const purchasedCount = items.filter((item) => item.purchased).length;
 
@@ -77,7 +70,7 @@ const App = () => {
           item={editingItem}
           open={isEditModalOpen}
           onOpenChange={handleEditModalClose}
-          categories={CATEGORIES}
+          categories={FormCategories}
         />
       </main>
 
