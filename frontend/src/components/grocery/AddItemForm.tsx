@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -39,43 +40,55 @@ export const AddItemForm = () => {
   };
 
   return (
-    <div className="space-y-2">
+    <div>
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3">
         {/* Split into two sections for mobile view */}
         <div className="flex gap-3 flex-1">
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Item name"
-            className="flex-1"
-            required
-          />
-          <Input
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            placeholder="Qty"
-            className="w-20"
-          />
+          <div className="flex-1 space-y-1">
+            <Label htmlFor="add-item-name">Item name</Label>
+            <Input
+              id="add-item-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g., Eggs"
+              className="flex-1"
+              required
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="add-item-qty">Quantity</Label>
+            <Input
+              id="add-item-qty"
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              placeholder="e.g., 2"
+              className="w-24"
+            />
+          </div>
         </div>
 
-        <div className="flex gap-3">
-          <Select
-            value={category}
-            onValueChange={(val) => setCategory(val as GroceryCategory)}
-          >
-            <SelectTrigger className="w-full md:w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {FormCategories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="flex gap-3 items-end">
+          <div className="flex-1 space-y-1">
+            <Label htmlFor="add-item-category">Category</Label>
+            <Select
+              value={category}
+              onValueChange={(val) => setCategory(val as GroceryCategory)}
+            >
+              <SelectTrigger id="add-item-category" className="w-full md:w-40">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {FormCategories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           <Button type="submit" className="flex-1 md:flex-none bg-green-600 hover:bg-green-700">
             <Plus className="h-4 w-4 mr-2" />

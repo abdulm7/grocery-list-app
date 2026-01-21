@@ -78,6 +78,7 @@ export const ActionBar = () => {
         >
           <Trash2 className="h-4 w-4 md:mr-2" />
           <span className="hidden md:inline">Clear List</span>
+          <span className="inline md:hidden">Clear</span>
         </Button>
       </div>
 

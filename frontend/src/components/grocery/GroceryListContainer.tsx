@@ -13,7 +13,7 @@ export const GroceryListContainer = ({ items, onEdit }: GroceryListContainerProp
   }
 
   return (
-    <div className="flex flex-col gap-3 max-h-[70vh] overflow-y-auto">
+    <div className="flex flex-col gap-3 md:max-h-[60vh] max-h-[55vh] overflow-y-auto border-2 rounded-sm p-2">
       {items.map((item) => (
         <GroceryItemCard key={item.id} item={item} onEdit={onEdit} />
       ))}
