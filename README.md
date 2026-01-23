@@ -64,7 +64,6 @@ A full-stack web application for managing a single family's grocery list. Built 
 
 ## Docker Commands
 
-**:**
 ```bash
 docker compose up # Start services
 docker compose up -d # Start in background
