@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# Grocery List Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript frontend for the Grocery List App. Built with Vite, React Query, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Fast build tool with HMR
+- **TanStack React Query** - Data fetching & caching
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - Component library
+- **Nginx** - Production reverse proxy
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ✅ Add, edit, delete grocery items
+- ✅ Mark items as purchased (individual or bulk)
+- ✅ Smart sorting (unpurchased first, then by category)
+- ✅ Real-time form validation with error messages
+- ✅ Optimized caching with React Query
+- ✅ Responsive design (mobile, tablet, desktop)
+- ✅ Error handling with user-friendly alerts
 
-## Expanding the ESLint configuration
+## Development
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 20+ and npm (package manager)
+- Backend API running on http://localhost:8000
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Commands
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Runs on http://localhost:5173 with hot module reload.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+## API Integration
+
+The frontend communicates with the backend API at `/api/` endpoint. API requests are proxied through Nginx in production.
+When running with `npm run dev` double check the proxy matches the backend host in `vite.config.ts`
+or set .env variable `VITE_API_URL`
+
+**Available API methods:**
+- `GET /api/grocery-items/` - Fetch all items
+- `POST /api/grocery-items/` - Create item
+- `PATCH /api/grocery-items/{id}/` - Update item
+- `DELETE /api/grocery-items/{id}/` - Delete item
+- `DELETE /api/grocery-items/` - Delete all items
+- `PATCH /api/grocery-items/bulk-update/` - Bulk update purchased status
+
+See [../README.md](../README.md) for full API documentation.
+
+## Troubleshooting
+
+**API requests failing:**
+- Ensure backend is running on http://localhost:8000
+- Check browser console for CORS errors
+- Verify API proxy in `nginx-frontend.conf` is correct
+
+
+## Resources
+
+- [React Documentation](https://react.dev)
+- [Vite Documentation](https://vite.dev)
+- [React Query Documentation](https://tanstack.com/query/latest)
+- [Tailwind CSS Documentation](https://tailwindcss.com)

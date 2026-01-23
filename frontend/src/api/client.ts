@@ -10,7 +10,11 @@ export class ApiRequestError extends Error {
   }
 }
 
-// Parse DRF field errors into a flat Record<fieldName, errorMessage>
+/**
+* Parse DRF field errors into a flat Record<fieldName, errorMessage>
+* @param data - The error data to parse
+**/
+
 function parseFieldErrors(data: unknown): Record<string, string> {
   if (!data || typeof data !== "object") return {};
 
@@ -23,7 +27,11 @@ function parseFieldErrors(data: unknown): Record<string, string> {
   return errors;
 }
 
-// Generic fetch wrapper
+/**
+ * Generic fetch wrapper
+ * @param endpoint - The API endpoint to request
+ * @param options - Fetch options 
+ * */ 
 async function request<T>(
   endpoint: string,
   options: RequestInit = {},
@@ -38,7 +46,6 @@ async function request<T>(
     ...options,
   });
 
-  // Handle 204 No Content (empty response)
   if (response.status === 204) {
     return {} as T;
   }
@@ -55,7 +62,6 @@ async function request<T>(
     return data as T;
   }
 
-  // Error handling
   const fieldErrors = parseFieldErrors(data);
   const message =
     Object.keys(fieldErrors).length > 0

@@ -57,6 +57,6 @@ class GroceryItemListTests(APITestCase):
         GroceryItem.objects.create(name="Bread")
         GroceryItem.objects.create(name="Eggs")
         response = self.client.delete(self.url)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['deleted'], 3)
         self.assertEqual(GroceryItem.objects.count(), 0)

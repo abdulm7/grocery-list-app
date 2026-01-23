@@ -1,3 +1,4 @@
+// Types for Grocery API
 export type GroceryCategory = "Produce" | "Dairy" | "Meat" | "Pantry" | "Bakery" | "Other";
 
 export interface GroceryItem {

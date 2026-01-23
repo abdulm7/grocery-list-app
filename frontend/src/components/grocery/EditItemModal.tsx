@@ -44,6 +44,7 @@ export const EditItemModal = ({
   // Populate form when item changes
   useEffect(() => {
     if (item) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(item.name);
       setCategory(item.category);
       setQuantity(item.quantity);
@@ -55,7 +56,7 @@ export const EditItemModal = ({
     if (open) {
       updateItemMutation.reset();
     }
-  }, [open]);
+  }, [open, updateItemMutation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

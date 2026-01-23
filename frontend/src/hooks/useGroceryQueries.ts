@@ -14,12 +14,10 @@ import type {
   UpdateGroceryItem,
 } from "@/api/types";
 
-// Query keys
 export const groceryKeys = {
   all: ["grocery-items"] as const,
 };
 
-// Fetch grocery items
 export const useGroceryItems = () => {
   return useQuery({
     queryKey: groceryKeys.all,
@@ -36,7 +34,6 @@ export const useGroceryItems = () => {
   });
 };
 
-// Add item mutation
 export const useAddItem = () => {
   const queryClient = useQueryClient();
 
@@ -51,7 +48,6 @@ export const useAddItem = () => {
   });
 };
 
-// Update item mutation
 export const useUpdateItem = () => {
   const queryClient = useQueryClient();
 
@@ -66,7 +62,6 @@ export const useUpdateItem = () => {
   });
 };
 
-// Delete item mutation
 export const useDeleteItem = () => {
   const queryClient = useQueryClient();
 
@@ -80,7 +75,6 @@ export const useDeleteItem = () => {
   });
 };
 
-// Toggle purchased mutation
 export const useTogglePurchased = () => {
   const queryClient = useQueryClient();
 
@@ -102,7 +96,6 @@ export const useTogglePurchased = () => {
   });
 };
 
-// Delete all items mutation
 export const useDeleteAllItems = () => {
   const queryClient = useQueryClient();
 
@@ -114,7 +107,6 @@ export const useDeleteAllItems = () => {
   });
 };
 
-// Toggle all purchased mutation
 export const useToggleAllPurchased = () => {
   const queryClient = useQueryClient();
 
@@ -128,7 +120,6 @@ export const useToggleAllPurchased = () => {
   });
 };
 
-// Helper to extract field errors from ApiRequestError
 export const getFieldErrors = (error: unknown): Record<string, string> => {
   if (error instanceof ApiRequestError) {
     return error.fieldErrors;
@@ -136,7 +127,7 @@ export const getFieldErrors = (error: unknown): Record<string, string> => {
   return {};
 };
 
-// Helper to extract error message
+
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof ApiRequestError) {
     return error.message;
