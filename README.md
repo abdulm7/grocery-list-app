@@ -38,8 +38,6 @@ A full-stack web application for managing a single family's grocery list. Built 
    ```
 
 2. **Create environment file**
-   ```bash
-   ```
    
    Create `.env` with your configuration, populating the variables below:
    Reference `.env.example`
